@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Study Assistant - Smart Study Planner</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <style>
+    .ai-tab-btn {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+      border-radius: var(--radius-md);
+      padding: 0.6rem 1.4rem;
+      font-weight: 600;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .ai-tab-btn.active, .ai-tab-btn:hover {
+      background: var(--bg-gradient);
+      color: #fff;
+      border-color: transparent;
+    }
+    .ai-section { display: none; }
+    .ai-section.active { display: block; animation: fadeInUp 0.4s ease; }
+  </style>
+</head>
+<body data-page="ai-assistant">
+
+  <div id="layout-root"></div>
+
+  <div class="main-content" id="main-content">
+
+    <!-- Hero Banner -->
+    <div class="glass-card p-4 mb-4 fade-in-up gradient-bg text-white">
+      <div class="d-flex align-items-center gap-3">
+        <div class="stat-icon bg-white" style="color:#6366F1;font-size:1.6rem;"><i class="fas fa-robot"></i></div>
+        <div>
+          <h5 class="fw-bold mb-1">AI Study Assistant <span class="ai-badge ms-2">Powered by OpenAI</span></h5>
+          <p class="mb-0 opacity-85">Your personal AI coach — schedule suggestions, time predictions & daily plans.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="d-flex gap-2 flex-wrap mb-4 fade-in-up">
+      <button class="ai-tab-btn active" data-tab="daily">
+        <i class="fas fa-sun me-2"></i>Daily Plan
+      </button>
+      <button class="ai-tab-btn" data-tab="schedule">
+        <i class="fas fa-calendar-check me-2"></i>Schedule Generator
+      </button>
+      <button class="ai-tab-btn" data-tab="predict">
+        <i class="fas fa-hourglass-half me-2"></i>Time Predictor
+      </button>
+    </div>
+
+    <!-- ====== DAILY PLAN ====== -->
+    <div class="ai-section active" id="tab-daily">
+      <div class="glass-card p-4 fade-in-up">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <h6 class="fw-bold mb-0"><i class="fas fa-sun text-warning me-2"></i>Today's Recommended Study Plan</h6>
+          <button class="btn btn-gradient btn-sm" id="refreshDailyBtn">
+            <i class="fas fa-rotate-right me-1"></i>Refresh Plan
+          </button>
+        </div>
+        <p class="text-secondary small mb-3">Based on your pending tasks, subjects, and workload, the AI recommends what to focus on today.</p>
+        <div id="dailyPlanResult"></div>
+      </div>
+    </div>
+
+    <!-- ====== SCHEDULE GENERATOR ====== -->
+    <div class="ai-section" id="tab-schedule">
+      <div class="glass-card p-4 fade-in-up">
+        <h6 class="fw-bold mb-1"><i class="fas fa-calendar-check text-primary me-2"></i>AI Study Schedule Generator</h6>
+        <p class="text-secondary small mb-4">Tell the AI how much time you have and it will plan a complete study schedule for the week, automatically saved to your calendar.</p>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <label class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="schedStart">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">End Date</label>
+            <input type="date" class="form-control" id="schedEnd">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Daily Available Hours</label>
+            <select class="form-select" id="schedHours">
+              <option value="1">1 hour</option>
+              <option value="2">2 hours</option>
+              <option value="3" selected>3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="5">5 hours</option>
+              <option value="6">6 hours</option>
+              <option value="8">8 hours</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-gradient mb-4" id="generateScheduleBtn">
+          <i class="fas fa-wand-magic-sparkles me-2"></i>Generate AI Schedule
+        </button>
+        <div id="scheduleResult"></div>
+      </div>
+    </div>
+
+    <!-- ====== TIME PREDICTOR ====== -->
+    <div class="ai-section" id="tab-predict">
+      <div class="glass-card p-4 fade-in-up">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <div>
+            <h6 class="fw-bold mb-1"><i class="fas fa-hourglass-half text-accent me-2"></i>Task Completion Time Predictor</h6>
+            <p class="text-secondary small mb-0">The AI estimates how long each of your pending tasks will realistically take to complete.</p>
+          </div>
+          <button class="btn btn-gradient btn-sm" id="predictAllBtn">
+            <i class="fas fa-wand-magic-sparkles me-1"></i>Predict All Tasks
+          </button>
+        </div>
+        <div id="predictionResult"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/ai-assistant.js"></script>
+  <script>
+    // Tab switching
+    document.querySelectorAll('.ai-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.ai-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.ai-section').forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+      });
+    });
+
+    // Set default dates
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(nextWeek.getDate() + 7);
+    document.getElementById('schedStart').value = today.toISOString().split('T')[0];
+    document.getElementById('schedEnd').value = nextWeek.toISOString().split('T')[0];
+
+    // Load daily plan on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDailyAIPlan('dailyPlanResult');
+    });
+
+    document.getElementById('refreshDailyBtn').addEventListener('click', () => {
+      loadDailyAIPlan('dailyPlanResult');
+    });
+
+    document.getElementById('generateScheduleBtn').addEventListener('click', () => {
+      const btn = document.getElementById('generateScheduleBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Generating...';
+      generateAISchedule('scheduleResult', {
+        startDate: document.getElementById('schedStart').value,
+        endDate: document.getElementById('schedEnd').value,
+        dailyAvailableHours: Number(document.getElementById('schedHours').value),
+      }).finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-wand-magic-sparkles me-2"></i>Generate AI Schedule';
+      });
+    });
+
+    document.getElementById('predictAllBtn').addEventListener('click', () => {
+      predictTaskCompletion('predictionResult');
+    });
+  </script>
+</body>
+</html>

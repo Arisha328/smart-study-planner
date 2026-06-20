@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Calendar - Smart Study Planner</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <style>
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 4px; }
+    .cal-day-name { text-align: center; font-weight: 600; font-size: 0.8rem; color: var(--text-secondary); padding: 0.4rem; }
+    .cal-cell { min-height: 90px; border-radius: var(--radius-sm); background: var(--bg-card); border: 1px solid var(--border-glass); padding: 0.4rem; cursor: pointer; transition: var(--transition); }
+    .cal-cell:hover { border-color: var(--primary); }
+    .cal-cell.today { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(99,102,241,0.25); }
+    .cal-cell.other-month { opacity: 0.35; }
+    .cal-cell .day-num { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
+    .cal-cell.today .day-num { color: var(--primary); }
+    .cal-event { font-size: 0.68rem; padding: 2px 5px; border-radius: 4px; margin-bottom: 2px; color: #fff; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: pointer; }
+    .week-grid { display: grid; grid-template-columns: 60px repeat(7, 1fr); }
+    .week-time-col { font-size: 0.72rem; color: var(--text-secondary); text-align: right; padding-right: 8px; }
+    .week-cell { border-left: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass); min-height: 48px; position: relative; }
+    .week-event { position: absolute; left: 2px; right: 2px; border-radius: 4px; font-size: 0.68rem; color: #fff; padding: 2px 5px; z-index: 1; overflow: hidden; }
+  </style>
+</head>
+<body data-page="calendar">
+
+  <div id="layout-root"></div>
+
+  <div class="main-content" id="main-content">
+
+    <!-- Controls -->
+    <div class="glass-card p-3 mb-4 fade-in-up d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-outline-gradient btn-sm" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <h6 class="mb-0 fw-bold" id="calendarTitle">Month</h6>
+        <button class="btn btn-outline-gradient btn-sm" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        <button class="btn btn-sm btn-gradient ms-2" id="todayBtn">Today</button>
+      </div>
+      <div class="d-flex gap-2">
+        <div class="btn-group">
+          <button class="btn btn-outline-gradient btn-sm active" id="monthViewBtn">Month</button>
+          <button class="btn btn-outline-gradient btn-sm" id="weekViewBtn">Week</button>
+        </div>
+        <button class="btn btn-gradient btn-sm" onclick="openScheduleModal()"><i class="fas fa-plus me-1"></i>Add Session</button>
+      </div>
+    </div>
+
+    <!-- Calendar Render Area -->
+    <div class="glass-card p-3 fade-in-up" id="calendarWrap">
+      <div id="calendarView"></div>
+    </div>
+
+  </div>
+
+  <!-- Schedule Modal -->
+  <div class="modal fade" id="scheduleModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content glass-card border-0">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="scheduleModalTitle">Add Study Session</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="scheduleForm">
+          <div class="modal-body">
+            <input type="hidden" id="scheduleId">
+            <div class="mb-3">
+              <label class="form-label">Session Title</label>
+              <input type="text" class="form-control" id="sessionTitle" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Subject</label>
+              <select class="form-select" id="sessionSubject">
+                <option value="">General</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label class="form-label">Start Time</label>
+                <input type="datetime-local" class="form-control" id="sessionStart" required>
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label">End Time</label>
+                <input type="datetime-local" class="form-control" id="sessionEnd" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Notes</label>
+              <textarea class="form-control" id="sessionNotes" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-outline-danger me-auto d-none" id="deleteSessionBtn">Delete</button>
+            <button type="button" class="btn btn-outline-gradient" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-gradient" id="saveSessionBtn">Save Session</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/calendar.js"></script>
+</body>
+</html>

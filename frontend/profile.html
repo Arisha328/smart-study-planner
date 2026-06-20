@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile - Smart Study Planner</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <style>
+    .avatar-wrap {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+    }
+    .avatar-wrap img, .avatar-initials {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .avatar-initials {
+      background: var(--bg-gradient);
+      color: #fff;
+      font-size: 2.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .avatar-edit-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body data-page="profile">
+
+  <div id="layout-root"></div>
+
+  <div class="main-content" id="main-content">
+    <div class="row g-4">
+
+      <!-- Profile Card -->
+      <div class="col-lg-4">
+        <div class="glass-card p-4 text-center fade-in-up">
+          <div class="avatar-wrap mb-3">
+            <div class="avatar-initials" id="avatarInitials">S</div>
+            <label class="avatar-edit-btn" for="avatarInput" title="Change photo"><i class="fas fa-camera"></i></label>
+            <input type="file" id="avatarInput" accept="image/*" class="d-none">
+          </div>
+          <h5 class="fw-bold mb-0" id="profileName">–</h5>
+          <p class="text-secondary mb-1" id="profileEmail">–</p>
+          <p class="text-secondary small mb-3" id="profileMeta">–</p>
+          <div class="d-flex justify-content-center gap-3">
+            <div class="text-center">
+              <div class="fw-bold gradient-text" id="profileSubjects">–</div>
+              <div class="small text-secondary">Subjects</div>
+            </div>
+            <div class="text-center">
+              <div class="fw-bold gradient-text" id="profileCompleted">–</div>
+              <div class="small text-secondary">Completed</div>
+            </div>
+            <div class="text-center">
+              <div class="fw-bold gradient-text" id="profileHours">–</div>
+              <div class="small text-secondary">Hours</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Form -->
+      <div class="col-lg-8">
+        <div class="glass-card p-4 fade-in-up">
+          <h6 class="fw-bold mb-4">Edit Profile</h6>
+          <form id="profileForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="editName" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="editEmail" disabled>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">University</label>
+                <input type="text" class="form-control" id="editUniversity" placeholder="e.g. MIT">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Department</label>
+                <input type="text" class="form-control" id="editDepartment" placeholder="e.g. Computer Science">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-gradient mt-4" id="saveProfileBtn">
+              <i class="fas fa-floppy-disk me-2"></i>Save Changes
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

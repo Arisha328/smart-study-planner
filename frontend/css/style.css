@@ -1,0 +1,496 @@
+/* ==========================================================================
+   Smart Study Planner - Main Stylesheet
+   Design system: glassmorphism, gradients, light/dark mode
+   ========================================================================== */
+
+:root {
+  --primary: #6366F1;
+  --secondary: #8B5CF6;
+  --accent: #06B6D4;
+  --success: #10B981;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+
+  --bg-gradient: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #06B6D4 100%);
+
+  --text-primary: #1E1B2E;
+  --text-secondary: #6B7280;
+  --bg-body: #F4F5FB;
+  --bg-card: rgba(255, 255, 255, 0.65);
+  --bg-card-solid: #FFFFFF;
+  --border-glass: rgba(255, 255, 255, 0.35);
+  --shadow-glass: 0 8px 32px rgba(99, 102, 241, 0.12);
+
+  --sidebar-bg: rgba(255, 255, 255, 0.55);
+  --navbar-bg: rgba(255, 255, 255, 0.6);
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --transition: all 0.3s ease;
+}
+
+[data-theme="dark"] {
+  --text-primary: #F1F2F8;
+  --text-secondary: #A1A8C3;
+  --bg-body: #11121F;
+  --bg-card: rgba(30, 32, 53, 0.65);
+  --bg-card-solid: #1B1D30;
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --sidebar-bg: rgba(20, 21, 38, 0.7);
+  --navbar-bg: rgba(20, 21, 38, 0.7);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  transition: var(--transition);
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   Utility / Glass Components
+   ========================================================================== */
+
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: var(--transition);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(99, 102, 241, 0.18);
+}
+
+.gradient-bg {
+  background: var(--bg-gradient);
+}
+
+.gradient-text {
+  background: var(--bg-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.btn-gradient {
+  background: var(--bg-gradient);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1.75rem;
+  transition: var(--transition);
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+  color: #fff;
+}
+
+.btn-outline-gradient {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.6rem 1.7rem;
+  transition: var(--transition);
+}
+
+.btn-outline-gradient:hover {
+  background: var(--bg-gradient);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.float-anim {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+
+.navbar-glass {
+  background: var(--navbar-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.navbar-glass .nav-link {
+  color: var(--text-primary);
+  font-weight: 500;
+  margin: 0 0.5rem;
+}
+
+.navbar-glass .nav-link:hover,
+.navbar-glass .nav-link.active {
+  color: var(--primary);
+}
+
+.brand-logo {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+/* ==========================================================================
+   Sidebar (dashboard layout)
+   ========================================================================== */
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: var(--sidebar-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid var(--border-glass);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  transition: transform 0.3s ease;
+  padding-top: 1.5rem;
+}
+
+.sidebar .nav-link {
+  color: var(--text-secondary);
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  margin: 0.2rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: var(--transition);
+}
+
+.sidebar .nav-link i {
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar .nav-link:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+}
+
+.sidebar .nav-link.active {
+  background: var(--bg-gradient);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+.main-content {
+  margin-left: 260px;
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+}
+
+.topbar {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-toggle-btn {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 1.25rem;
+  }
+  .sidebar-toggle-btn {
+    display: inline-flex;
+  }
+}
+
+/* ==========================================================================
+   Stat / Dashboard cards
+   ========================================================================== */
+
+.stat-card {
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+}
+
+.stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.stat-value {
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.progress-thin {
+  height: 8px;
+  border-radius: 6px;
+  background: rgba(99, 102, 241, 0.12);
+}
+
+.progress-thin .progress-bar {
+  background: var(--bg-gradient);
+  border-radius: 6px;
+}
+
+/* ==========================================================================
+   Forms (auth pages, modals)
+   ========================================================================== */
+
+.form-control,
+.form-select {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1rem;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gradient);
+  padding: 2rem;
+}
+
+.auth-card {
+  max-width: 440px;
+  width: 100%;
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+}
+
+/* ==========================================================================
+   Badges / Priority tags
+   ========================================================================== */
+
+.badge-priority-low {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+.badge-priority-medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+}
+.badge-priority-high {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+}
+
+/* ==========================================================================
+   Empty States
+   ========================================================================== */
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+}
+
+.empty-state i {
+  font-size: 3rem;
+  background: var(--bg-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   Toasts
+   ========================================================================== */
+
+.toast-container {
+  z-index: 1080;
+}
+
+/* ==========================================================================
+   Loading Spinner
+   ========================================================================== */
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 18, 31, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.spinner-gradient {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-gradient);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 0);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 0);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   AI Assistant Widget
+   ========================================================================== */
+
+.ai-assistant-card {
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  padding: 1.5rem;
+}
+
+.ai-badge {
+  background: var(--bg-gradient);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+
+.ai-plan-item {
+  border-left: 3px solid var(--primary);
+  background: rgba(99, 102, 241, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.ai-loading-dots span {
+  animation: blink 1.4s infinite both;
+  font-size: 1.5rem;
+}
+.ai-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.ai-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+/* ==========================================================================
+   Misc
+   ========================================================================== */
+
+.theme-toggle-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-glass);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}

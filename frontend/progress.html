@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Progress Analytics - Smart Study Planner</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body data-page="progress">
+
+  <div id="layout-root"></div>
+
+  <div class="main-content" id="main-content">
+
+    <!-- Stats Row -->
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-lg-3">
+        <div class="glass-card stat-card fade-in-up text-center">
+          <div class="stat-icon gradient-bg mx-auto mb-3"><i class="fas fa-circle-check"></i></div>
+          <div class="stat-value" id="pCompletedTasks">–</div>
+          <div class="stat-label">Completed Tasks</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="glass-card stat-card fade-in-up text-center">
+          <div class="stat-icon gradient-bg mx-auto mb-3"><i class="fas fa-hourglass-half"></i></div>
+          <div class="stat-value" id="pPendingTasks">–</div>
+          <div class="stat-label">Pending Tasks</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="glass-card stat-card fade-in-up text-center">
+          <div class="stat-icon gradient-bg mx-auto mb-3"><i class="fas fa-clock"></i></div>
+          <div class="stat-value" id="pStudyHours">–</div>
+          <div class="stat-label">Study Hours</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="glass-card stat-card fade-in-up text-center">
+          <div class="stat-icon gradient-bg mx-auto mb-3"><i class="fas fa-percent"></i></div>
+          <div class="stat-value" id="pCompletion">–</div>
+          <div class="stat-label">Completion Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-6">
+        <div class="glass-card p-4 fade-in-up">
+          <h6 class="fw-bold mb-3">Weekly Study Hours (Bar)</h6>
+          <canvas id="barChart" height="220"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="glass-card p-4 fade-in-up">
+          <h6 class="fw-bold mb-3">Task Status (Pie)</h6>
+          <canvas id="pieChart" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-lg-8">
+        <div class="glass-card p-4 fade-in-up">
+          <h6 class="fw-bold mb-3">Subject Progress (Line)</h6>
+          <canvas id="lineChart" height="200"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="glass-card p-4 fade-in-up">
+          <h6 class="fw-bold mb-3">Priority Breakdown</h6>
+          <canvas id="priorityChart" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subject Progress List -->
+    <div class="glass-card p-4 fade-in-up">
+      <h6 class="fw-bold mb-3">Per-Subject Progress</h6>
+      <div id="subjectProgressList">
+        <div class="text-center text-secondary py-3">Loading...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/progress.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Smart Study Planner</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body data-page="dashboard">
+
+  <div id="layout-root"></div>
+
+  <div class="main-content" id="main-content">
+
+    <!-- Welcome Card -->
+    <div class="glass-card p-4 mb-4 fade-in-up gradient-bg text-white">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <h4 class="fw-bold mb-1" id="welcomeText">Welcome back!</h4>
+          <p class="mb-0 opacity-85">Here's what's happening with your studies today.</p>
+        </div>
+        <a href="ai-assistant.html" class="btn btn-light fw-semibold"><i class="fas fa-robot me-2"></i>Ask AI Assistant</a>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-lg-3">
+        <div class="glass-card stat-card fade-in-up">
+          <div class="stat-icon gradient-bg mb-3"><i class="fas fa-list-check"></i></div>
+          <div class="stat-value" id="statTodayTasks">0</div>
+          <div class="stat-label">Today's Tasks</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="glass-card stat-card fade-in-up">
+          <div class="stat-icon gradient-bg mb-3"><i class="fas fa-clock"></i></div>
+          <div class="stat-value" id="statUpcomingTasks">0</div>
+          <div class="stat-label">Upcoming Tasks</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="glass-card stat-card fade-in-up">
+          <div class="stat-icon gradient-bg mb-3"><i class="fas fa-book"></i></div>
+          <div class="stat-value" id="statSubjects">0</div>
+          <div class="stat-label">Subjects</div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="glass-card stat-card fade-in-up">
+          <div class="stat-icon gradient-bg mb-3"><i class="fas fa-circle-check"></i></div>
+          <div class="stat-value" id="statCompleted">0</div>
+          <div class="stat-label">Completed Tasks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="glass-card p-4 mb-4 fade-in-up">
+      <div class="d-flex justify-content-between mb-2">
+        <strong>Overall Progress</strong>
+        <span id="progressPercentText" class="gradient-text fw-bold">0%</span>
+      </div>
+      <div class="progress progress-thin">
+        <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-4">
+        <div class="glass-card p-4 h-100 fade-in-up">
+          <h6 class="fw-bold mb-3">Weekly Study Hours</h6>
+          <canvas id="weeklyHoursChart" height="220"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="glass-card p-4 h-100 fade-in-up">
+          <h6 class="fw-bold mb-3">Task Completion</h6>
+          <canvas id="taskCompletionChart" height="220"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="glass-card p-4 h-100 fade-in-up">
+          <h6 class="fw-bold mb-3">Subject Progress</h6>
+          <canvas id="subjectProgressChart" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Today's and Upcoming Tasks -->
+    <div class="row g-4 mb-4">
+      <div class="col-lg-6">
+        <div class="glass-card p-4 h-100 fade-in-up">
+          <h6 class="fw-bold mb-3"><i class="fas fa-calendar-day text-primary me-2"></i>Today's Tasks</h6>
+          <div id="todayTasksList"><div class="text-center text-secondary py-3">Loading...</div></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="glass-card p-4 h-100 fade-in-up">
+          <h6 class="fw-bold mb-3"><i class="fas fa-clock text-primary me-2"></i>Upcoming Tasks</h6>
+          <div id="upcomingTasksList"><div class="text-center text-secondary py-3">Loading...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Assistant Preview -->
+    <div class="ai-assistant-card fade-in-up">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0"><i class="fas fa-robot text-primary me-2"></i>AI Daily Plan <span class="ai-badge ms-2">AI</span></h6>
+        <a href="ai-assistant.html" class="small gradient-text fw-semibold">Open Assistant <i class="fas fa-arrow-right ms-1"></i></a>
+      </div>
+      <div id="dashboardAiPlan"></div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/ai-assistant.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
