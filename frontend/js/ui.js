@@ -71,3 +71,19 @@ function initScrollReveal() {
 }
 
 document.addEventListener('DOMContentLoaded', initScrollReveal);
+
+/**
+ * Escape HTML to prevent injection when inserting strings into innerHTML.
+ * Also attach to window to ensure availability across pages.
+ */
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+window.escapeHtml = escapeHtml;
