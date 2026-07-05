@@ -1,7 +1,13 @@
 // js/api.js
 // Central API configuration and fetch wrapper for Smart Study Planner
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = (() => {
+  const currentOrigin = window.location.origin;
+  if (currentOrigin && currentOrigin !== 'null') {
+    return `${currentOrigin}/api`;
+  }
+  return 'http://127.0.0.1:5000/api';
+})();
 
 /**
  * Generic API request helper.
