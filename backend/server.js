@@ -45,10 +45,6 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Smart Study Planner API is running 🚀' });
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
-
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/subjects', require('./routes/subjectRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
@@ -56,6 +52,10 @@ app.use('/api/schedules', require('./routes/scheduleRoutes'));
 app.use('/api/progress', require('./routes/progressRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes')); // AI Study Assistant routes
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
 
 // ===== Error Handling =====
 app.use(notFound);
