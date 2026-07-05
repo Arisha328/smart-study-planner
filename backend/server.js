@@ -2,6 +2,7 @@
 // Entry point for the Smart Study Planner backend API
 
 const express = require('express');
+const path = require('path');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -33,14 +34,19 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '5mb' })); // parse JSON bodies (allow base64 images for profile pics)
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev')); // request logging in dev
 }
 
 // ===== Routes =====
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ message: 'Smart Study Planner API is running 🚀' });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 app.use('/api/auth', require('./routes/authRoutes'));
