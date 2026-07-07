@@ -26,6 +26,11 @@ const corsOptions = {
     if (clientUrls.includes('*') || clientUrls.includes(origin)) {
       return callback(null, true);
     }
+    // Allow common localhost origins even if CLIENT_URL is set
+    const localhostPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+    if (localhostPattern.test(origin)) {
+      return callback(null, true);
+    }
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,

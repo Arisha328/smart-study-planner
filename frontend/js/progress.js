@@ -1,7 +1,7 @@
 // js/progress.js
 // Progress Analytics - loads data and renders all charts
 
-document.addEventListener('DOMContentLoaded', async () => {
+async function initProgress() {
   try {
     const res = await api.get('/progress');
     const p = res.data;
@@ -111,7 +111,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (err) {
     showToast(err.message, 'danger');
   }
-});
+}
+
+// Run now if DOM is ready, otherwise wait for the event
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initProgress);
+} else {
+  initProgress();
+}
 
 function renderSubjectList(subjects) {
   const el = document.getElementById('subjectProgressList');
